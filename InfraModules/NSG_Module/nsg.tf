@@ -14,6 +14,18 @@ resource "azurerm_network_security_group" "nsg" {
         source_address_prefix      = "*"
         destination_address_prefix = "*"
     }
+
+    security_rule {
+    name                       = "allow-http"
+    priority                   = 101               # Lower numbers have higher priority
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"              # Opens Port 80
+    source_address_prefix      = "*"               # Allows traffic from anywhere
+    destination_address_prefix = "*"
+  }
 }
 
 

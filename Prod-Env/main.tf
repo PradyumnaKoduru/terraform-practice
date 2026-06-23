@@ -46,10 +46,17 @@ module "nsg" {
   resource_group_name = module.RG.Resource_Group_name
 }
 
+module "nsgassos" {
+  source = "../InfraModules/nsgsubnetassociate_module"
+  subnet_id = module.Network.subnet_id
+  network_security_group_id = module.nsg.nsg_id
+}
+
 module "vm" {
   source = "../InfraModules/VM_Module"
   vm_name = "my-vm"
   vm_location = module.RG.Resource_Group_location
   resource_group_name = module.RG.Resource_Group_name
   nic_id = module.nic.nic_id
+  public_ip_address = module.pip.pip_ip_address
 }
